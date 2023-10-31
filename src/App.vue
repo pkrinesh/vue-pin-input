@@ -80,6 +80,9 @@ function handleKeypress(e: KeyboardEvent, index: number) {
 
 function handleFocus(e: Event, index: number) {
 	e.preventDefault()
+	const el = e.target as HTMLInputElement
+
+	el.setSelectionRange(1, 1)
 	pinRefs.value[index].placeholder = ''
 	focusedIndex.value = index
 }
