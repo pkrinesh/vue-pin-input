@@ -12,6 +12,15 @@ const pinString = computed(() => pin.value.join(''))
 
 onMounted(() => {
 	pinRefs.value[pin.value.length === 0 ? 0 : pin.value.length - 1].focus()
+	pinRefs.value.forEach((item, index) => {
+		item.setAttribute('role', 'tab')
+		if (index === 0) {
+			item.setAttribute('tabindex', '0')
+			// we'll add something here
+		} else {
+			item.setAttribute('tabindex', '-1')
+		}
+	})
 })
 
 function handleComplete(value: string) {
@@ -37,42 +46,50 @@ function handleChange(e: Event, index: number) {
 }
 
 function handleKeypress(e: KeyboardEvent, index: number) {
-	const prevEl = prev(pinRefs.value, index)
-	const nextEl = next(pinRefs.value, index)
-
 	switch (e.key) {
-		case 'Backspace':
+		case 'Backspace': {
 			e.preventDefault()
 			if (pin.value[index]) {
 				pin.value[index] = ''
 			} else {
 				pin.value[index - 1] = ''
-				pinRefs.value[index === 0 ? index : index - 1].focus()
+				const prevEl = prev(pinRefs.value, index)
+				prevEl.focus()
 			}
 			break
-		case 'Delete':
+		}
+		case 'Delete': {
 			e.preventDefault()
 			pin.value[index] = ''
 			break
-		case 'ArrowLeft':
+		}
+		case 'ArrowLeft': {
 			e.preventDefault()
-			prevEl.focus()
+			const prevEl = prev(pinRefs.value, index)
+			if (index) {
+				prevEl.focus()
+			}
 			break
-		case 'ArrowRight':
+		}
+		case 'ArrowRight': {
 			e.preventDefault()
 			if (index < pin.value.length) {
+				const nextEl = next(pinRefs.value, index)
 				nextEl.focus()
 			}
 			break
-		case 'Home':
+		}
+		case 'Home': {
 			e.preventDefault()
 			pinRefs.value[0].focus()
 			break
-		case 'End':
+		}
+		case 'End': {
 			e.preventDefault()
 			if (pin.value.length !== PIN_SIZE) return
 			last(pinRefs.value).focus()
 			break
+		}
 		default:
 			break
 	}
@@ -92,22 +109,26 @@ function handleBlur(e: Event, index: number) {
 	pinRefs.value[index].placeholder = PLACEHOLDER
 }
 
-function next<T>(array: T[], index: number): T {
-	if (index === array.length - 1) {
-		return array[index]
-	}
-	return array[index + 1]
+function next<T extends HTMLElement>(items: T[], index: number): T {
+	removeTabIndex(items)
+	const nextIndex = index === items.length - 1 ? index : index + 1
+	items[nextIndex].setAttribute('tabindex', '0')
+	return items[nextIndex]
 }
 
-function prev<T>(array: T[], currentIndex: number): T {
-	if (currentIndex <= 0) {
-		return array[0]
-	}
-	return array[currentIndex - 1]
+function prev<T extends HTMLElement>(items: T[], currentIndex: number): T {
+	removeTabIndex(items)
+	const prevIndex = currentIndex <= 0 ? 0 : currentIndex - 1
+	items[prevIndex].setAttribute('tabindex', '0')
+	return items[prevIndex]
 }
 
-function last<T>(array: T[]): T {
-	return array[array.length - 1]
+function last<T extends HTMLElement>(items: T[]): T {
+	return items[items.length - 1]
+}
+
+function removeTabIndex<T extends HTMLElement>(items: T[]): void {
+	return items.forEach((item) => item.setAttribute('tabindex', '-1'))
 }
 </script>
 
@@ -164,6 +185,7 @@ function last<T>(array: T[]): T {
 	height: 2.5rem;
 	background-color: transparent;
 	color: inherit;
+	font-weight: 500;
 	border: 1px solid hsl(var(--bc));
 	text-align: center;
 	border-radius: var(--rounded-btn);
