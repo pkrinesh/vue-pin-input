@@ -11,6 +11,9 @@
  * [ ] Make a proper otp page with mock api both success and error
  */
 import { computed, onMounted, ref, triggerRef } from 'vue'
+import { next, prev, last } from '@/utils/array.js'
+import { addTabIndex } from '@/utils/tabs.js'
+
 const PIN_SIZE = 6
 const PLACEHOLDER = 'o'
 const pinInputs = Array.from({ length: PIN_SIZE }).fill(0)
@@ -42,8 +45,8 @@ function handleComplete(value: string) {
 
 function handleInput(e: Event, index: number) {
 	e.preventDefault()
-	const el = e.target as HTMLInputElement
 
+	const el = e.target as HTMLInputElement
 	if (!el.value) return
 
 	const selectionStart = el.selectionStart ?? 1
@@ -51,7 +54,8 @@ function handleInput(e: Event, index: number) {
 	pin.value.splice(index, 1, value)
 	triggerRef(pin)
 
-	const nextEl = next(pinRefs.value, index)
+	const { nextEl, nextIndex } = next(pinRefs.value, index)
+	addTabIndex(pinRefs.value, nextIndex)
 	nextEl.focus()
 
 	handleComplete(pinString.value)
@@ -71,9 +75,11 @@ function handlePaste(e: ClipboardEvent, index: number) {
 		pin.value[i] = pastedData[i - initialIndex]
 		triggerRef(pinRefs)
 		pinRefs.value[i].focus()
+		addTabIndex(pinRefs.value, i)
 	}
 
 	pinRefs.value[lastIndex]?.focus()
+	addTabIndex(pinRefs.value, lastIndex - 1)
 	handleComplete(pinString.value)
 }
 
@@ -81,12 +87,14 @@ function handleKeypress(e: KeyboardEvent, index: number) {
 	switch (e.key) {
 		case 'Backspace': {
 			e.preventDefault()
+
 			if (pin.value[index]) {
 				pin.value[index] = ''
 			} else {
 				pin.value[index - 1] = ''
-				const prevEl = prev(pinRefs.value, index)
+				const { prevEl, prevIndex } = prev(pinRefs.value, index)
 				prevEl.focus()
+				addTabIndex(pinRefs.value, prevIndex)
 			}
 			break
 		}
@@ -97,29 +105,31 @@ function handleKeypress(e: KeyboardEvent, index: number) {
 		}
 		case 'ArrowLeft': {
 			e.preventDefault()
-			const prevEl = prev(pinRefs.value, index)
-			if (index) {
-				prevEl.focus()
-			}
+			const { prevEl, prevIndex } = prev(pinRefs.value, index)
+			prevEl.focus()
+			addTabIndex(pinRefs.value, prevIndex)
 			break
 		}
 		case 'ArrowRight': {
 			e.preventDefault()
 			if (index < pin.value.length) {
-				const nextEl = next(pinRefs.value, index)
+				const { nextEl, nextIndex } = next(pinRefs.value, index)
 				nextEl.focus()
+				addTabIndex(pinRefs.value, nextIndex)
 			}
 			break
 		}
 		case 'Home': {
 			e.preventDefault()
 			pinRefs.value[0].focus()
+			addTabIndex(pinRefs.value, 0)
 			break
 		}
 		case 'End': {
 			e.preventDefault()
 			if (pin.value.length !== PIN_SIZE) return
 			last(pinRefs.value).focus()
+			addTabIndex(pinRefs.value, pinRefs.value.length - 1)
 			break
 		}
 		default:
@@ -139,32 +149,6 @@ function handleFocus(e: FocusEvent, index: number) {
 function handleBlur(e: FocusEvent, index: number) {
 	e.preventDefault()
 	pinRefs.value[index].placeholder = PLACEHOLDER
-}
-
-function next<T extends HTMLElement>(items: T[], index: number): T {
-	removeTabIndex(items)
-	const nextIndex = index === items.length - 1 ? index : index + 1
-	setTabIndex(items, nextIndex)
-	return items[nextIndex]
-}
-
-function prev<T extends HTMLElement>(items: T[], currentIndex: number): T {
-	removeTabIndex(items)
-	const prevIndex = currentIndex <= 0 ? 0 : currentIndex - 1
-	setTabIndex(items, prevIndex)
-	return items[prevIndex]
-}
-
-function last<T extends HTMLElement>(items: T[]): T {
-	return items[items.length - 1]
-}
-
-function setTabIndex<T extends HTMLElement>(items: T[], index: number): void {
-	return items[index].setAttribute('tabindex', '0')
-}
-
-function removeTabIndex<T extends HTMLElement>(items: T[]): void {
-	return items.forEach((item) => item.setAttribute('tabindex', '-1'))
 }
 </script>
 
