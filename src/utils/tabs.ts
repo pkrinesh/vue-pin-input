@@ -4,7 +4,7 @@ export function addTabIndex<T extends HTMLElement>(items: T[], index: number): v
 	return items[index].setAttribute('tabindex', '0')
 }
 
-export function removeTabIndex<T extends HTMLElement>(items: T[]): void {
+function removeTabIndex<T extends HTMLElement>(items: T[]): void {
 	console.log('removeIndex')
 	return items.forEach((item) => item.setAttribute('tabindex', '-1'))
 }

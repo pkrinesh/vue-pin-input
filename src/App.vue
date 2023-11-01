@@ -26,14 +26,9 @@ const pinString = computed(() => pin.value.join(''))
 
 onMounted(() => {
 	pinRefs.value[pin.value.length === 0 ? 0 : pin.value.length - 1].focus()
-	pinRefs.value.forEach((item, index) => {
+	addTabIndex(pinRefs.value, pin.value.length === 0 ? 0 : pin.value.length - 1)
+	pinRefs.value.forEach((item) => {
 		item.setAttribute('role', 'tab')
-		if (index === 0) {
-			item.setAttribute('tabindex', '0')
-			// we'll add something here
-		} else {
-			item.setAttribute('tabindex', '-1')
-		}
 	})
 })
 
