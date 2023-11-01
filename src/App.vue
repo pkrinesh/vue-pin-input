@@ -1,4 +1,15 @@
 <script setup lang="ts">
+/**
+ * [x] Copy-paste input - 192837
+ * [ ] for utils function use ref/no-ref - look into vueuse
+ * [ ] separate component
+ * [ ] make it headless and composable
+ * [ ] Error handling
+ * [ ] Animated border, on error animation and different colors
+ * [ ] Document the process
+ * [ ] Separate the core utils and more
+ * [ ] Make a proper otp page with mock api both success and error
+ */
 import { computed, onMounted, ref, triggerRef } from 'vue'
 const PIN_SIZE = 6
 const PLACEHOLDER = 'o'
@@ -27,7 +38,8 @@ function handleComplete(value: string) {
 	console.log(value)
 }
 
-function handleChange(e: Event, index: number) {
+function handleInput(e: Event, index: number) {
+	e.preventDefault()
 	const el = e.target as HTMLInputElement
 
 	if (!el.value) return
@@ -43,6 +55,25 @@ function handleChange(e: Event, index: number) {
 	if (pinString.value.length === PIN_SIZE && focusedIndex.value === PIN_SIZE - 1) {
 		handleComplete(pinString.value)
 	}
+}
+
+function handlePaste(e: ClipboardEvent, index: number) {
+	e.preventDefault()
+
+	const clipboardData = e.clipboardData
+	if (!clipboardData) return
+
+	const pastedData = clipboardData.getData('text')
+	const initialIndex = pastedData.length >= PIN_SIZE ? 0 : index
+	const lastIndex = Math.min(initialIndex + pastedData.length, PIN_SIZE)
+
+	for (let i = initialIndex; i < lastIndex; i++) {
+		pin.value[i] = pastedData[i - initialIndex]
+		triggerRef(pinRefs)
+		pinRefs.value[i].focus()
+	}
+
+	pinRefs.value[lastIndex]?.focus()
 }
 
 function handleKeypress(e: KeyboardEvent, index: number) {
@@ -95,7 +126,7 @@ function handleKeypress(e: KeyboardEvent, index: number) {
 	}
 }
 
-function handleFocus(e: Event, index: number) {
+function handleFocus(e: FocusEvent, index: number) {
 	e.preventDefault()
 	const el = e.target as HTMLInputElement
 
@@ -104,7 +135,7 @@ function handleFocus(e: Event, index: number) {
 	focusedIndex.value = index
 }
 
-function handleBlur(e: Event, index: number) {
+function handleBlur(e: FocusEvent, index: number) {
 	e.preventDefault()
 	pinRefs.value[index].placeholder = PLACEHOLDER
 }
@@ -112,19 +143,23 @@ function handleBlur(e: Event, index: number) {
 function next<T extends HTMLElement>(items: T[], index: number): T {
 	removeTabIndex(items)
 	const nextIndex = index === items.length - 1 ? index : index + 1
-	items[nextIndex].setAttribute('tabindex', '0')
+	setTabIndex(items, nextIndex)
 	return items[nextIndex]
 }
 
 function prev<T extends HTMLElement>(items: T[], currentIndex: number): T {
 	removeTabIndex(items)
 	const prevIndex = currentIndex <= 0 ? 0 : currentIndex - 1
-	items[prevIndex].setAttribute('tabindex', '0')
+	setTabIndex(items, prevIndex)
 	return items[prevIndex]
 }
 
 function last<T extends HTMLElement>(items: T[]): T {
 	return items[items.length - 1]
+}
+
+function setTabIndex<T extends HTMLElement>(items: T[], index: number): void {
+	return items[index].setAttribute('tabindex', '0')
 }
 
 function removeTabIndex<T extends HTMLElement>(items: T[]): void {
@@ -150,14 +185,16 @@ function removeTabIndex<T extends HTMLElement>(items: T[]): void {
 						}
 					"
 					:value="pin[index]"
-					@input="(e) => handleChange(e, index)"
+					@input="(e) => handleInput(e, index)"
 					@keyup="(e) => handleKeypress(e, index)"
 					@focus="(e) => handleFocus(e, index)"
 					@blur="(e) => handleBlur(e, index)"
+					@paste="(e) => handlePaste(e, index)"
 				/>
 			</div>
 			<p>{{ pin }}</p>
 			<p>{{ pinString || '&nbsp;' }}</p>
+			<p>Copy this code: <code class="code">192837</code></p>
 		</form>
 	</div>
 </template>
