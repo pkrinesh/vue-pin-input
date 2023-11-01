@@ -35,6 +35,8 @@ onMounted(() => {
 })
 
 function handleComplete(value: string) {
+	if (pinString.value.length !== PIN_SIZE || focusedIndex.value !== PIN_SIZE - 1) return
+
 	console.log(value)
 }
 
@@ -52,9 +54,7 @@ function handleInput(e: Event, index: number) {
 	const nextEl = next(pinRefs.value, index)
 	nextEl.focus()
 
-	if (pinString.value.length === PIN_SIZE && focusedIndex.value === PIN_SIZE - 1) {
-		handleComplete(pinString.value)
-	}
+	handleComplete(pinString.value)
 }
 
 function handlePaste(e: ClipboardEvent, index: number) {
@@ -74,6 +74,7 @@ function handlePaste(e: ClipboardEvent, index: number) {
 	}
 
 	pinRefs.value[lastIndex]?.focus()
+	handleComplete(pinString.value)
 }
 
 function handleKeypress(e: KeyboardEvent, index: number) {
