@@ -11,10 +11,12 @@
  * [ ] Document the process
  * [ ] Make a proper otp page with mock api both success and error
  */
-import { computed, ref, provide, toValue, readonly, toRefs } from 'vue'
+import { computed, ref, toValue, readonly, toRefs } from 'vue'
+import { definePinContext } from './pin-context'
 
 const props = defineProps<{
 	mask?: boolean
+	placeholder?: string
 }>()
 
 const emit = defineEmits<{
@@ -22,9 +24,9 @@ const emit = defineEmits<{
 	valueChange: [value: string]
 }>()
 
-const { mask } = toRefs(props)
+const { mask, placeholder } = toRefs(props)
 
-const pinRefs = ref<HTMLInputElement[]>([])
+const pinRefs = ref<Array<HTMLInputElement>>([])
 const pin = ref<string[]>([])
 const focusedIndex = ref(0)
 const pinString = computed(() => pin.value.join(''))
@@ -41,15 +43,15 @@ function handleComplete() {
 	emit('complete', pinString.value)
 }
 
-function handleInputElementChange(el: HTMLInputElement, index: number) {
-	pinRefs.value[index] = el
+function handleInputElementChange(el: HTMLInputElement | null, index: number) {
+	pinRefs.value[index] = el as HTMLInputElement
 }
 
 function handleFocusIndexChange(index: number) {
 	focusedIndex.value = index
 }
 
-provide('pinInputContext', {
+definePinContext({
 	pinRefs: toValue(pinRefs),
 	pin: toValue(pin),
 	pinSize: readonly(pinSize),
@@ -59,11 +61,11 @@ provide('pinInputContext', {
 	handleFocusIndexChange,
 	mask,
 	labelFor,
+	placeholder,
 })
 </script>
 
 <template>
-	<p>{{ props.mask }}</p>
 	<div v-bind="$attrs">
 		<slot />
 	</div>

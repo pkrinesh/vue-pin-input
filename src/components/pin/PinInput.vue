@@ -1,30 +1,16 @@
 <script setup lang="ts">
 import { last, next, prev } from '@/utils/array.js'
 import { addTabIndex } from '@/utils/tabs.js'
-import { computed, inject, onMounted, onUnmounted, ref, type Ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { usePinContext } from './pin-context'
 
-const context = inject('pinInputContext') as {
-	pinRefs: HTMLInputElement[]
-	pin: string[]
-	pinSize: Readonly<Ref<number>>
-	mask?: Ref<boolean>
-	handleComplete: () => void
-	handlePinChange: (value: string, index: number) => void
-	handleInputElementChange: (el: HTMLInputElement | null, index: number) => void
-	handleFocusIndexChange: (index: number) => void
-}
-
-if (!context) {
-	throw new Error('Injection not found. Component must be used within PinRoot component')
-}
-
-const isMasked = computed(() => context.mask?.value)
 const props = defineProps<{
 	index: number
 }>()
-
-const PLACEHOLDER = 'o'
+const context = usePinContext()
 const inputRef = ref<HTMLInputElement | null>(null)
+const isMasked = computed(() => context.mask?.value)
+const placeholder = computed(() => context.placeholder?.value ?? 'o')
 
 onMounted(() => {
 	const el = inputRef.value
@@ -162,7 +148,7 @@ function handleFocus(e: FocusEvent, index: number) {
 function handleBlur(e: FocusEvent) {
 	e.preventDefault()
 	if (!inputRef.value) return
-	inputRef.value.placeholder = PLACEHOLDER
+	inputRef.value.placeholder = placeholder.value
 }
 </script>
 
@@ -171,7 +157,7 @@ function handleBlur(e: FocusEvent) {
 		ref="inputRef"
 		:id="`pin-input-${index}`"
 		:type="isMasked ? 'password' : 'text'"
-		:placeholder="PLACEHOLDER"
+		:placeholder="placeholder"
 		:value="context.pin[props.index]"
 		@input="(e) => handleInput(e, props.index)"
 		@keydown="(e) => handleKeydown(e, props.index)"

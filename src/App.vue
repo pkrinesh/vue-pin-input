@@ -6,28 +6,15 @@ import { ref } from 'vue'
 
 const PIN_SIZE = 6
 const pinValue = ref('')
-const isMasked = ref(false)
 </script>
 
 <template>
 	<div class="screen">
-		<p>{{ isMasked }}</p>
-		<button @click="() => (isMasked = !isMasked)">Toggle</button>
 		<form>
-			<PinRoot
-				:mask="isMasked"
-				@complete="(value) => console.log(value)"
-				@valueChange="(val) => (pinValue = val)"
-			>
+			<PinRoot @complete="(value) => console.log(value)" @valueChange="(val) => (pinValue = val)">
 				<PinLabel>Enter otp sent to your number:</PinLabel>
 				<div class="pin-container">
-					<PinInput
-						v-for="(_, index) in PIN_SIZE"
-						class="pin-input"
-						:key="index"
-						:index="index"
-						:pin-size="PIN_SIZE"
-					/>
+					<PinInput v-for="(_, index) in PIN_SIZE" class="pin-input" :key="index" :index="index" />
 				</div>
 			</PinRoot>
 		</form>
