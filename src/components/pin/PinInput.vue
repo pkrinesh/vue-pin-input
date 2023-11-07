@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import { last, next, prev } from '@/utils/array.js'
 import { addTabIndex } from '@/utils/tabs.js'
-import { inject, onMounted, ref } from 'vue'
-
-const prop = defineProps<{
-	index: number
-	pinSize: number
-}>()
+import { inject, onMounted, onUnmounted, ref, type Ref } from 'vue'
 
 const context = inject('pinInputContext') as {
 	pinRefs: HTMLInputElement[]
 	pin: string[]
+	pinSize: Readonly<Ref<number>>
 	handleComplete: () => void
 	handlePinChange: (value: string, index: number) => void
-	handleInputElementChange: (el: HTMLInputElement, index: number) => void
+	handleInputElementChange: (el: HTMLInputElement | null, index: number) => void
 	handleFocusIndexChange: (index: number) => void
 }
 
@@ -21,14 +17,22 @@ if (!context) {
 	throw new Error('Injection not found. Component must be used within PinRoot component')
 }
 
+const props = defineProps<{
+	index: number
+}>()
+
 const PLACEHOLDER = 'o'
 const inputRef = ref<HTMLInputElement | null>(null)
 
 onMounted(() => {
 	const el = inputRef.value
-	if (!el || context.pinRefs[prop.index]) return
+	if (!el || context.pinRefs[props.index]) return
 
-	context.handleInputElementChange(el, prop.index)
+	context.handleInputElementChange(el, props.index)
+})
+
+onUnmounted(() => {
+	context.handleInputElementChange(null, props.index)
 })
 
 onMounted(() => {
@@ -67,8 +71,8 @@ function handlePaste(e: ClipboardEvent, index: number) {
 	if (!clipboardData) return
 
 	const pastedData = clipboardData.getData('text')
-	const initialIndex = pastedData.length >= prop.pinSize ? 0 : index
-	const lastIndex = Math.min(initialIndex + pastedData.length, prop.pinSize)
+	const initialIndex = pastedData.length >= context.pinSize.value ? 0 : index
+	const lastIndex = Math.min(initialIndex + pastedData.length, context.pinSize.value)
 
 	for (let i = initialIndex; i < lastIndex; i++) {
 		context.handlePinChange(pastedData[i - initialIndex], i)
@@ -131,7 +135,7 @@ function handleKeypress(e: KeyboardEvent, index: number) {
 		}
 		case 'End': {
 			e.preventDefault()
-			if (!context.pin[prop.pinSize - 1]) return
+			if (!context.pin[context.pinSize.value - 1]) return
 
 			last(context.pinRefs).focus()
 			addTabIndex(context.pinRefs, context.pinRefs.length - 1)
@@ -166,11 +170,11 @@ function handleBlur(e: FocusEvent) {
 		id="pin-input"
 		ref="inputRef"
 		:placeholder="PLACEHOLDER"
-		:value="context.pin[prop.index]"
-		@input="(e) => handleInput(e, prop.index)"
-		@keyup="(e) => handleKeypress(e, prop.index)"
-		@focus="(e) => handleFocus(e, prop.index)"
+		:value="context.pin[props.index]"
+		@input="(e) => handleInput(e, props.index)"
+		@keyup="(e) => handleKeypress(e, props.index)"
+		@focus="(e) => handleFocus(e, props.index)"
 		@blur="(e) => handleBlur(e)"
-		@paste="(e) => handlePaste(e, prop.index)"
+		@paste="(e) => handlePaste(e, props.index)"
 	/>
 </template>
