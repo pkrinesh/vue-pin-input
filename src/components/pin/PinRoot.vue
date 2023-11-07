@@ -4,25 +4,32 @@
  * [x] separate component
  * [x] make it headless and composable
  * [x] Separate the core utils and more
- * [ ] Masked input
+ * [x] Masked input
  * [ ] for utils function use ref/no-ref - look into vueuse
  * [ ] Error handling
  * [ ] Animated border, on error animation and different colors
  * [ ] Document the process
  * [ ] Make a proper otp page with mock api both success and error
  */
-import { computed, ref, provide, toValue, readonly } from 'vue'
+import { computed, ref, provide, toValue, readonly, toRefs } from 'vue'
+
+const props = defineProps<{
+	mask?: boolean
+}>()
 
 const emit = defineEmits<{
 	complete: [value: string]
 	valueChange: [value: string]
 }>()
 
+const { mask } = toRefs(props)
+
 const pinRefs = ref<HTMLInputElement[]>([])
 const pin = ref<string[]>([])
 const focusedIndex = ref(0)
 const pinString = computed(() => pin.value.join(''))
 const pinSize = computed(() => pinRefs.value.length)
+const labelFor = computed(() => `pin-input-${focusedIndex.value}`)
 
 function handlePinChange(value: string, index: number) {
 	pin.value[index] = value
@@ -50,14 +57,14 @@ provide('pinInputContext', {
 	handlePinChange,
 	handleInputElementChange,
 	handleFocusIndexChange,
+	mask,
+	labelFor,
 })
 </script>
 
 <template>
+	<p>{{ props.mask }}</p>
 	<div v-bind="$attrs">
 		<slot />
 	</div>
-	<p>{{ pinSize }}</p>
-	<p>{{ pinString || '&nbsp;' }}</p>
-	<p>Copy this code: <code class="code">192837</code></p>
 </template>

@@ -1,16 +1,25 @@
 <script setup lang="ts">
 import PinInput from '@/components/pin/PinInput.vue'
 import PinRoot from '@/components/pin/PinRoot.vue'
-import PinLabel from '@/components/pin/PinRoot.vue'
+import PinLabel from '@/components/pin/PinLabel.vue'
+import { ref } from 'vue'
 
 const PIN_SIZE = 6
+const pinValue = ref('')
+const isMasked = ref(false)
 </script>
 
 <template>
 	<div class="screen">
+		<p>{{ isMasked }}</p>
+		<button @click="() => (isMasked = !isMasked)">Toggle</button>
 		<form>
-			<PinRoot>
-				<PinLabel for="pin-input">Enter otp sent to your number:</PinLabel>
+			<PinRoot
+				:mask="isMasked"
+				@complete="(value) => console.log(value)"
+				@valueChange="(val) => (pinValue = val)"
+			>
+				<PinLabel>Enter otp sent to your number:</PinLabel>
 				<div class="pin-container">
 					<PinInput
 						v-for="(_, index) in PIN_SIZE"
@@ -22,6 +31,8 @@ const PIN_SIZE = 6
 				</div>
 			</PinRoot>
 		</form>
+		<p>{{ pinValue || '&nbsp;' }}</p>
+		<p>Copy this code: <code class="code">192837</code></p>
 	</div>
 </template>
 
