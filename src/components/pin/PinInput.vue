@@ -87,7 +87,7 @@ function handlePaste(e: ClipboardEvent, index: number) {
 	context.handleComplete()
 }
 
-function handleKeypress(e: KeyboardEvent, index: number) {
+function handleKeydown(e: KeyboardEvent, index: number) {
 	switch (e.key) {
 		case 'Backspace': {
 			e.preventDefault()
@@ -174,7 +174,7 @@ function handleBlur(e: FocusEvent) {
 		:placeholder="PLACEHOLDER"
 		:value="context.pin[props.index]"
 		@input="(e) => handleInput(e, props.index)"
-		@keyup="(e) => handleKeypress(e, props.index)"
+		@keydown="(e) => handleKeydown(e, props.index)"
 		@focus="(e) => handleFocus(e, props.index)"
 		@blur="(e) => handleBlur(e)"
 		@paste="(e) => handlePaste(e, props.index)"
