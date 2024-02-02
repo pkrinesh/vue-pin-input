@@ -1,11 +1,13 @@
 import { shallowRef, triggerRef } from 'vue'
 
-export function signal<T>(value: T) {
+type Set<T> = (value: T | ((value: T) => void)) => void
+
+export function state<T>(value: T): [() => T, Set<T>] {
 	const r = shallowRef(value)
 
 	const get = () => r.value
 
-	const set = (value: T | ((value: T) => void)): void => {
+	const set: Set<T> = (value) => {
 		if (value instanceof Function) {
 			value(r.value)
 			triggerRef(r)
@@ -13,5 +15,6 @@ export function signal<T>(value: T) {
 			r.value = value
 		}
 	}
+
 	return [get, set]
 }
