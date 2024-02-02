@@ -6,6 +6,7 @@ import { usePinContext } from './pin-context'
 
 const props = defineProps<{
 	index: number
+	disabled?: boolean
 }>()
 const context = usePinContext()
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -165,5 +166,6 @@ function handleBlur(e: FocusEvent) {
 		@focus="(e) => handleFocus(e, props.index)"
 		@blur="(e) => handleBlur(e)"
 		@paste="(e) => handlePaste(e, props.index)"
+		:disabled="disabled ? disabled : false"
 	/>
 </template>
