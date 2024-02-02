@@ -61,8 +61,8 @@ function handleCopy() {
 								class="h10 w10 bg-transparent placeholder-foreground/70 outline-none"
 								:class="[
 									isError()
-										? 'border-destructive ring ring-3 ring-destructive focus:ring-destructive'
-										: 'border-border focus:ring focus:ring-3 focus:ring-ring',
+										? 'border-destructive ring ring-destructive focus:ring-destructive'
+										: 'border-border focus:ring focus:ring-ring',
 								]"
 								border="~ 1 rounded"
 								text="center lg muted-foreground"
@@ -91,7 +91,7 @@ function handleCopy() {
 			<div v-else class="" flex="~ col justify-center items-center gap-2">
 				<div v-confetti="{ duration: 2000, stageHeight: 500, stageWidth: 500, force: 1 }" />
 				<h1 class="text-4xl font-bold">Congratulations!</h1>
-				<p>Thank you for playing along. I hope you had a fun.</p>
+				<p>Thank you for playing along. I hope you had fun.</p>
 				<button
 					@click="setIsOtpTrue(false)"
 					class="mt6 px4 py3 bg-secondary/80 rounded font-semibold transition hover:bg-secondary"
