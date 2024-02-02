@@ -9,6 +9,7 @@ export type PinContext = {
 	mask?: Ref<boolean>
 	placeholder?: Ref<string | undefined>
 	labelFor: ComputedRef<string>
+	handleComplete: () => void
 	handlePinChange: (value: string, index: number) => void
 	handleInputElementChange: (el: HTMLInputElement | null, index: number) => void
 	handleFocusIndexChange: (index: number) => void

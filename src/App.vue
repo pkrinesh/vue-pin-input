@@ -2,19 +2,24 @@
 import PinInput from '@/components/pin/PinInput.vue'
 import PinRoot from '@/components/pin/PinRoot.vue'
 import PinLabel from '@/components/pin/PinLabel.vue'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
+
+const TRUE_OTP = '192837'
 
 const PIN_SIZE = 6
 const pinValue = ref('')
+const isOtpTrue = ref(false)
 
 function handleComplete(value: string) {
-	alert(value)
+	if (value === TRUE_OTP) return (isOtpTrue.value = true)
+
+	return (isOtpTrue.value = false)
 }
 </script>
 
 <template>
 	<div class="screen">
-		<form>
+		<form v-if="!isOtpTrue">
 			<PinRoot @complete="handleComplete" @valueChange="(val) => (pinValue = val)">
 				<PinLabel>Enter otp sent to your number:</PinLabel>
 				<div class="pin-container">
@@ -25,6 +30,9 @@ function handleComplete(value: string) {
 				<p>Copy this code: <code class="code">192837</code></p>
 			</div>
 		</form>
+		<div v-else>
+			<p>Otp is Correct</p>
+		</div>
 	</div>
 </template>
 

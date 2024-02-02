@@ -68,6 +68,7 @@ definePinContext({
 	labelFor,
 	placeholder,
 	dataCompleted: dataCompleted,
+	handleComplete,
 })
 </script>
 

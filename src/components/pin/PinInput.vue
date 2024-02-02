@@ -48,6 +48,8 @@ function handleInput(e: Event, index: number) {
 	const { nextEl, nextIndex } = next(context.pinRefs, index)
 	addTabIndex(context.pinRefs, nextIndex)
 	nextEl.focus()
+
+	// context.handleComplete()
 }
 
 function handlePaste(e: ClipboardEvent, index: number) {
@@ -68,6 +70,7 @@ function handlePaste(e: ClipboardEvent, index: number) {
 
 	context.pinRefs[lastIndex]?.focus()
 	addTabIndex(context.pinRefs, lastIndex - 1)
+	// context.handleComplete()
 }
 
 function handleKeydown(e: KeyboardEvent, index: number) {
@@ -156,7 +159,7 @@ function handleBlur(e: FocusEvent) {
 		:type="isMasked ? 'password' : 'text'"
 		:placeholder="placeholder"
 		:value="context.pin[props.index]"
-		:data-completed="context.dataCompleted.value ? '' : undefined"
+		:data-completed="context.dataCompleted ? '' : undefined"
 		@input="(e) => handleInput(e, props.index)"
 		@keydown="(e) => handleKeydown(e, props.index)"
 		@focus="(e) => handleFocus(e, props.index)"
