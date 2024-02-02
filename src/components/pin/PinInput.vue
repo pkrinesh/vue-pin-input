@@ -84,7 +84,7 @@ function handleKeydown(e: KeyboardEvent, index: number) {
 				inputRef.value!.value = ''
 				context.handlePinChange('', index)
 			} else {
-				if (index === 0) return
+				if (index < 0) return
 				inputRef.value!.value = ''
 				context.handlePinChange('', index - 1)
 				const { prevEl, prevIndex } = prev(context.pinRefs, index)
