@@ -1,12 +1,12 @@
 <script setup lang="ts">
+import CopyCheck from '@/components/icons/CopyCheck.vue'
+import CopyIcon from '@/components/icons/CopyIcon.vue'
 import PinInput from '@/components/pin/PinInput.vue'
 import PinLabel from '@/components/pin/PinLabel.vue'
 import PinRoot from '@/components/pin/PinRoot.vue'
-import CopyIcon from '@/components/icons/CopyIcon.vue'
-import CopyCheck from '@/components/icons/CopyCheck.vue'
-import { nextTick, ref } from 'vue'
 import { vConfetti } from '@neoconfetti/vue'
 import { useClipboard } from '@vueuse/core'
+import { ref } from 'vue'
 import { state } from './utils/signal'
 
 const TRUE_OTP = '192837'

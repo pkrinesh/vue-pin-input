@@ -3,7 +3,7 @@ import { provide, type ComputedRef, type Ref } from 'vue'
 
 export type PinContext = {
 	pinRefs: Array<HTMLInputElement>
-	pin: string[]
+	pin: Readonly<Ref<readonly string[]>>
 	pinSize: Readonly<Ref<number>>
 	dataCompleted: Readonly<Ref<boolean>>
 	mask?: Ref<boolean>

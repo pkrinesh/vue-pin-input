@@ -88,7 +88,7 @@ defineExpose({
 
 definePinContext({
 	pinRefs: toValue(pinRefs),
-	pin: toValue(pin),
+	pin: readonly(pin),
 	pinSize: readonly(pinSize),
 	handlePinChange,
 	handleInputElementChange,

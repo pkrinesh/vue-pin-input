@@ -25,11 +25,11 @@ onUnmounted(() => {
 })
 
 onMounted(() => {
-	const pinEl = context.pinRefs[context.pin.length === 0 ? 0 : context.pin.length - 1]
+	const pinEl = context.pinRefs[context.pin.value.length === 0 ? 0 : context.pin.value.length - 1]
 	if (!pinEl) return
 
 	pinEl.focus()
-	addTabIndex(context.pinRefs, context.pin.length === 0 ? 0 : context.pin.length - 1)
+	addTabIndex(context.pinRefs, context.pin.value.length === 0 ? 0 : context.pin.value.length - 1)
 	context.pinRefs.forEach((item) => {
 		item.setAttribute('role', 'tab')
 	})
@@ -80,7 +80,7 @@ function handleKeydown(e: KeyboardEvent, index: number) {
 		case 'Backspace': {
 			e.preventDefault()
 
-			if (context.pin[index]) {
+			if (context.pin.value[index]) {
 				inputRef.value!.value = ''
 				context.handlePinChange('', index)
 			} else {
@@ -125,7 +125,7 @@ function handleKeydown(e: KeyboardEvent, index: number) {
 		}
 		case 'End': {
 			e.preventDefault()
-			if (!context.pin[context.pinSize.value - 1]) return
+			if (!context.pin.value[context.pinSize.value - 1]) return
 
 			last(context.pinRefs).focus()
 			addTabIndex(context.pinRefs, context.pinRefs.length - 1)
