@@ -70,7 +70,7 @@ function handlePaste(e: ClipboardEvent, index: number) {
 
 	context.pinRefs[lastIndex]?.focus()
 	addTabIndex(context.pinRefs, lastIndex - 1)
-	// context.handleComplete()
+	context.handleComplete()
 }
 
 function handleKeydown(e: KeyboardEvent, index: number) {
