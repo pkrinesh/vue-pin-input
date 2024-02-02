@@ -1,60 +1,103 @@
-/* semantic color variables for this project */
+@layer base {
+	:root {
+		--b1: 44 47% 86%;
+		--b2: 45 47% 80%;
+		--b3: 44 47% 73%;
+		--bc: 345 5% 15%;
+		--n: 340 7% 17%;
+		--nc: 43 41% 88%;
+		--p: 2.67 74% 76%;
+		--pc: 345 5% 15%;
+		--s: 145 27% 72%;
+		--sc: var(--bc);
+		--a: 24 67% 59%;
+		--ac: var(--bc);
+		--su: 142.13 76% 36%;
+		--suc: var(--bc);
+		--e: 3.33 87% 62%;
+		--ec: var(--bc);
+	}
 
-/* @media (prefers-color-scheme: dark) { */
-:root {
-	--pf: 30 67% 51%;
-	--sf: 182 25% 13%;
-	--af: 194 74% 18%;
-	--nf: 0 0% 0%;
-	--b2: 306 19% 4%;
-	--b3: 0 0% 0%;
-	--pc: 28 35% 13%;
-	--sc: 182 6% 83%;
-	--ac: 199 20% 85%;
-	--nc: 300 1% 79%;
-	--inc: 170 12% 14%;
-	--suc: 92 11% 13%;
-	--wac: 41 33% 14%;
-	--erc: 11 25% 15%;
-	--rounded-box: 1rem;
-	--rounded-btn: 0.5rem;
-	--rounded-badge: 1.9rem;
-	--animation-btn: 0.25s;
-	--animation-input: 0.2s;
-	--btn-text-case: uppercase;
-	--btn-focus-scale: 0.95;
-	--border-btn: 1px;
-	--tab-border: 1px;
-	--tab-radius: 0.5rem;
-	--p: 30 67% 58%;
-	--s: 182 25% 20%;
-	--a: 194 74% 25%;
-	--n: 300 20% 6%;
-	--b1: 306 19% 11%;
-	--bc: 37 8% 42%;
-	--in: 171 37% 67%;
-	--su: 93 25% 62%;
-	--wa: 43 100% 69%;
-	--er: 10 95% 75%;
-}
-/* } */
+	/* business */
+	.dark {
+		--b1: 223.81 0% 13%;
+		--b2: 223.81 0% 11%;
+		--b3: 223.81 0% 9%;
+		--bc: 223.81 0% 80%;
+		--n: 212.73 14.000000000000002% 16%;
+		--nc: 212.89 3% 81%;
+		--p: 210 64% 31%;
+		--pc: 211.91 30% 86%;
+		--s: 182.4 25% 20%;
+		--sc: 181.75 6% 83%;
+		--a: 174.97 73% 42%;
+		--ac: 7.08 84% 4%;
+		--su: 142.13 76% 36%;
+		--suc: var(--bc);
+		--e: 6.34 56.00000000000001% 43%;
+		--ec: 9.04 54% 89%;
 
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
-	margin: 0;
-	font-weight: normal;
+		/* coffee */
+		/* .dark {
+		--b1: 306 19% 11%;
+		--b2: 306 19% 9%;
+		--b3: 306 21% 8%;
+		--n: 300 20% 6%;
+		--nc: 301.36 2% 79%;
+		--bc: 37.43 47% 56.99%;
+		--p: var(--n);
+		--pc: var(--nc);
+		--s: 182.4 25% 20%;
+		--sc: 181.75 6% 83%;
+		--a: 194.19 74% 25%;
+		--ac: 197.58 22% 85%;
+		--e: 9.76 95% 75%;
+		--ec: 8.12 57.99% 5%; */
+	}
+
+	:root {
+		--background: var(--b1);
+		--foreground: var(--bc);
+
+		--card: var(--b2);
+		--card-foreground: var(--bc);
+
+		--popover: var(--b3);
+		--popover-foreground: var(--bc);
+
+		--primary: var(--p);
+		--primary-foreground: var(--pc);
+
+		--secondary: var(--s);
+		--secondary-foreground: var(--sc);
+
+		--neutral: var(--n);
+		--neutral-foreground: var(--nc);
+
+		--muted: var(--b3);
+		--muted-foreground: var(--bc);
+
+		--accent: var(--a);
+		--accent-foreground: var(--ac);
+
+		--success: var(--su);
+		--success-foreground: var(--suc);
+
+		--destructive: var(--e);
+		--destructive-foreground: var(--ec);
+
+		--border: var(--bc);
+		--input: var(--b3);
+		--ring: var(--bc);
+
+		--radius: 0.5rem;
+	}
 }
 
 body {
 	min-height: 100vh;
-	color: hsl(var(--bc));
-	background: hsl(var(--b1));
-	transition:
-		color 0.5s,
-		background-color 0.5s;
-	line-height: 1.6;
+	color: hsl(var(--foreground));
+	background: hsl(var(--background));
 	font-family:
 		Inter,
 		-apple-system,
@@ -68,7 +111,6 @@ body {
 		'Droid Sans',
 		'Helvetica Neue',
 		sans-serif;
-	font-size: 15px;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

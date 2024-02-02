@@ -156,6 +156,7 @@ function handleBlur(e: FocusEvent) {
 
 <template>
 	<input
+		v-bind="$attrs"
 		ref="inputRef"
 		:id="`pin-input-${index}`"
 		:type="isMasked ? 'password' : 'text'"
