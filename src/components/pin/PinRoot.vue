@@ -28,6 +28,7 @@ const { mask, placeholder } = toRefs(props)
 
 const pinRefs = ref<Array<HTMLInputElement>>([])
 const pin = ref<string[]>([])
+const dataCompleted = ref(false)
 const focusedIndex = ref(0)
 const pinString = computed(() => pin.value.join(''))
 const pinSize = computed(() => pinRefs.value.length)
@@ -36,11 +37,16 @@ const labelFor = computed(() => `pin-input-${focusedIndex.value}`)
 function handlePinChange(value: string, index: number) {
 	pin.value[index] = value
 	emit('valueChange', pinString.value)
+	handleComplete()
 }
 
 function handleComplete() {
-	if (pinString.value.length !== pinSize.value || focusedIndex.value !== pinSize.value - 1) return
-	emit('complete', pinString.value)
+	if (pinString.value.length !== pinSize.value || focusedIndex.value !== pinSize.value - 1) {
+		dataCompleted.value = false
+	} else {
+		dataCompleted.value = true
+		emit('complete', pinString.value)
+	}
 }
 
 function handleInputElementChange(el: HTMLInputElement | null, index: number) {
@@ -55,13 +61,13 @@ definePinContext({
 	pinRefs: toValue(pinRefs),
 	pin: toValue(pin),
 	pinSize: readonly(pinSize),
-	handleComplete,
 	handlePinChange,
 	handleInputElementChange,
 	handleFocusIndexChange,
 	mask,
 	labelFor,
 	placeholder,
+	dataCompleted: dataCompleted,
 })
 </script>
 

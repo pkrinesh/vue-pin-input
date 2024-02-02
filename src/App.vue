@@ -6,20 +6,25 @@ import { ref } from 'vue'
 
 const PIN_SIZE = 6
 const pinValue = ref('')
+
+function handleComplete(value: string) {
+	alert(value)
+}
 </script>
 
 <template>
 	<div class="screen">
 		<form>
-			<PinRoot @complete="(value) => console.log(value)" @valueChange="(val) => (pinValue = val)">
+			<PinRoot @complete="handleComplete" @valueChange="(val) => (pinValue = val)">
 				<PinLabel>Enter otp sent to your number:</PinLabel>
 				<div class="pin-container">
 					<PinInput v-for="(_, index) in PIN_SIZE" class="pin-input" :key="index" :index="index" />
 				</div>
 			</PinRoot>
+			<div>
+				<p>Copy this code: <code class="code">192837</code></p>
+			</div>
 		</form>
-		<p>{{ pinValue || '&nbsp;' }}</p>
-		<p>Copy this code: <code class="code">192837</code></p>
 	</div>
 </template>
 
@@ -55,10 +60,16 @@ const pinValue = ref('')
 }
 
 .pin-input:focus {
-	border-color: hsl(var(--p));
+	border-color: hsl(var(--pf));
 	/* outline-offset: 3px; */
 	outline-width: 2px;
 	outline-style: solid;
-	outline-color: hsl(var(--p));
+	outline-color: hsl(var(--pf));
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 }
 </style>
