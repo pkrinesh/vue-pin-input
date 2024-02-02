@@ -62,7 +62,7 @@ function handleCopy() {
 								:class="[
 									isError()
 										? 'border-destructive ring ring-3 ring-destructive focus:ring-destructive'
-										: 'border-border focus:(ring ring-3 ring-ring)',
+										: 'border-border focus:ring focus:ring-3 focus:ring-ring',
 								]"
 								border="~ 1 rounded"
 								text="center lg muted-foreground"
@@ -94,7 +94,7 @@ function handleCopy() {
 				<p>Thank you for playing along. I hope you had a fun.</p>
 				<button
 					@click="setIsOtpTrue(false)"
-					class="mt6 px4 py3 bg-secondary/80 rounded font-semibold transition hover:(bg-secondary)"
+					class="mt6 px4 py3 bg-secondary/80 rounded font-semibold transition hover:bg-secondary"
 					text=" accent primary-foreground"
 				>
 					Start Over
