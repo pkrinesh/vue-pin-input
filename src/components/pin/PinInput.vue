@@ -65,6 +65,7 @@ function handlePaste(e: ClipboardEvent, index: number) {
 	for (let i = initialIndex; i < lastIndex; i++) {
 		context.handlePinChange(pastedData[i - initialIndex], i)
 		context.pinRefs[i].focus()
+		context.pinRefs[i].value = pastedData[i - initialIndex]
 		addTabIndex(context.pinRefs, i)
 	}
 
@@ -158,7 +159,6 @@ function handleBlur(e: FocusEvent) {
 		:id="`pin-input-${index}`"
 		:type="isMasked ? 'password' : 'text'"
 		:placeholder="placeholder"
-		:value="context.pin[props.index]"
 		:data-completed="context.dataCompleted ? '' : undefined"
 		@input="(e) => handleInput(e, props.index)"
 		@keydown="(e) => handleKeydown(e, props.index)"
