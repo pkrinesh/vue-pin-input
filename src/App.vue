@@ -17,7 +17,6 @@ const { copy, copied } = useClipboard({ source: TRUE_OTP, legacy: true })
 
 const [isDisabled, setIsDisabled] = state(false)
 const [isOtpTrue, setIsOtpTrue] = state(false)
-const [isVisible, setIsVisible] = state(false)
 const [isError, setIsError] = state(false)
 
 async function handleComplete(value: string) {
@@ -75,17 +74,11 @@ function handleCopy() {
 					</PinRoot>
 				</form>
 
-				<div
-					class="relative w-75 p3 bg-muted"
-					border="~ card rounded"
-					@mouseenter="setIsVisible(true)"
-					@mouseleave="setIsVisible(false)"
-				>
-					<p class="font-semibold">Copy: 192837</p>
+				<div class="relative w-75 p3 bg-muted" border="~ card rounded">
+					<p class="font-semibold">192837</p>
 					<button
-						v-if="isVisible() || copied"
 						@click="handleCopy"
-						class="absolute top-0 right-2 h-8 w-8 translate-y-2 rounded"
+						class="absolute top-0 right-2 h-8 w-8 translate-y-2 rounded hover:opacity-85"
 						:class="[copied ? 'bg-secondary/60' : 'bg-card']"
 						flex="~ justify-center items-center"
 					>
