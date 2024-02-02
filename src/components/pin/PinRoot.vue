@@ -21,7 +21,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
 	complete: [value: string]
-	valueChange: [value: string]
+	valueChange: [value: string, index?: number]
 }>()
 
 const { mask, placeholder } = toRefs(props)
@@ -36,7 +36,7 @@ const labelFor = computed(() => `pin-input-${focusedIndex.value}`)
 
 function handlePinChange(value: string, index: number) {
 	pin.value[index] = value
-	emit('valueChange', pinString.value)
+	emit('valueChange', pinString.value, index)
 	handleComplete()
 }
 
@@ -49,6 +49,16 @@ function handleComplete() {
 	}
 }
 
+function focusInput() {
+	const el = pinRefs.value[focusedIndex.value] as HTMLInputElement
+	el.focus()
+}
+
+function blurInput() {
+	const el = pinRefs.value[focusedIndex.value] as HTMLInputElement
+	el.blur()
+}
+
 function handleInputElementChange(el: HTMLInputElement | null, index: number) {
 	pinRefs.value[index] = el as HTMLInputElement
 }
@@ -56,6 +66,11 @@ function handleInputElementChange(el: HTMLInputElement | null, index: number) {
 function handleFocusIndexChange(index: number) {
 	focusedIndex.value = index
 }
+
+defineExpose({
+	focus: focusInput,
+	blur: blurInput,
+})
 
 definePinContext({
 	pinRefs: toValue(pinRefs),
