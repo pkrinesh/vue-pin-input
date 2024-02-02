@@ -11,7 +11,7 @@
  * [ ] Document the process
  * [ ] Make a proper otp page with mock api both success and error
  */
-import { computed, ref, toValue, readonly, toRefs } from 'vue'
+import { computed, ref, toValue, readonly, toRefs, nextTick } from 'vue'
 import { definePinContext } from './pin-context'
 
 const props = defineProps<{
@@ -59,6 +59,19 @@ function blurInput() {
 	el.blur()
 }
 
+function resetInput() {
+	nextTick(() => {
+		pin.value = []
+		const el = pinRefs.value[0] as HTMLInputElement
+		el.focus()
+
+		for (let pinRef of pinRefs.value) {
+			const el = pinRef as HTMLInputElement
+			el.value = ''
+		}
+	})
+}
+
 function handleInputElementChange(el: HTMLInputElement | null, index: number) {
 	pinRefs.value[index] = el as HTMLInputElement
 }
@@ -70,6 +83,7 @@ function handleFocusIndexChange(index: number) {
 defineExpose({
 	focus: focusInput,
 	blur: blurInput,
+	reset: resetInput,
 })
 
 definePinContext({
