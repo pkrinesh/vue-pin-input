@@ -47,7 +47,7 @@ function handleInput(e: Event, index: number) {
 	context.handlePinChange(value, index)
 
 	const { nextEl, nextIndex } = next(context.pinRefs, index)
-	addTabIndex(context.pinRefs, nextIndex)
+	// addTabIndex(context.pinRefs, nextIndex)
 	nextEl.focus()
 
 	// context.handleComplete()
@@ -67,11 +67,11 @@ function handlePaste(e: ClipboardEvent, index: number) {
 		context.handlePinChange(pastedData[i - initialIndex], i)
 		context.pinRefs[i].focus()
 		context.pinRefs[i].value = pastedData[i - initialIndex]
-		addTabIndex(context.pinRefs, i)
+		// addTabIndex(context.pinRefs, i)
 	}
 
 	context.pinRefs[lastIndex]?.focus()
-	addTabIndex(context.pinRefs, lastIndex - 1)
+	// addTabIndex(context.pinRefs, lastIndex - 1)
 	context.handleComplete()
 }
 
@@ -89,7 +89,7 @@ function handleKeydown(e: KeyboardEvent, index: number) {
 				context.handlePinChange('', index - 1)
 				const { prevEl, prevIndex } = prev(context.pinRefs, index)
 				prevEl.focus()
-				addTabIndex(context.pinRefs, prevIndex)
+				// addTabIndex(context.pinRefs, prevIndex)
 			}
 			break
 		}
@@ -102,7 +102,7 @@ function handleKeydown(e: KeyboardEvent, index: number) {
 			e.preventDefault()
 			const { prevEl, prevIndex } = prev(context.pinRefs, index)
 			prevEl.focus()
-			addTabIndex(context.pinRefs, prevIndex)
+			// addTabIndex(context.pinRefs, prevIndex)
 			break
 		}
 		case 'ArrowRight': {
@@ -113,14 +113,14 @@ function handleKeydown(e: KeyboardEvent, index: number) {
 			if (el.value) {
 				const { nextEl, nextIndex } = next(context.pinRefs, index)
 				nextEl.focus()
-				addTabIndex(context.pinRefs, nextIndex)
+				// addTabIndex(context.pinRefs, nextIndex)
 			}
 			break
 		}
 		case 'Home': {
 			e.preventDefault()
 			context.pinRefs[0].focus()
-			addTabIndex(context.pinRefs, 0)
+			// addTabIndex(context.pinRefs, 0)
 			break
 		}
 		case 'End': {
@@ -128,7 +128,7 @@ function handleKeydown(e: KeyboardEvent, index: number) {
 			if (!context.pin.value[context.pinSize.value - 1]) return
 
 			last(context.pinRefs).focus()
-			addTabIndex(context.pinRefs, context.pinRefs.length - 1)
+			// addTabIndex(context.pinRefs, context.pinRefs.length - 1)
 			break
 		}
 		default:
@@ -145,6 +145,7 @@ function handleFocus(e: FocusEvent, index: number) {
 	inputRef.value.placeholder = ''
 
 	context.handleFocusIndexChange(index)
+	addTabIndex(context.pinRefs, index)
 }
 
 function handleBlur(e: FocusEvent) {
@@ -161,7 +162,7 @@ function handleBlur(e: FocusEvent) {
 		:id="`pin-input-${index}`"
 		:type="isMasked ? 'password' : 'text'"
 		:placeholder="placeholder"
-		:data-completed="context.dataCompleted ? '' : undefined"
+		:data-completed="context.dataCompleted.value ? '' : undefined"
 		@input="(e) => handleInput(e, props.index)"
 		@keydown="(e) => handleKeydown(e, props.index)"
 		@focus="(e) => handleFocus(e, props.index)"

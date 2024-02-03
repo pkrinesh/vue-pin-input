@@ -5,13 +5,13 @@
  * [x] make it headless and composable
  * [x] Separate the core utils and more
  * [x] Masked input
+ * [x] Make a proper otp page with mock api both success and error
  * [ ] for utils function use ref/no-ref - look into vueuse
  * [ ] Error handling
  * [ ] Animated border, on error animation and different colors
  * [ ] Document the process
- * [ ] Make a proper otp page with mock api both success and error
  */
-import { computed, ref, toValue, readonly, toRefs, nextTick } from 'vue'
+import { computed, nextTick, readonly, ref, toRefs, toValue } from 'vue'
 import { definePinContext } from './pin-context'
 
 const props = defineProps<{
@@ -28,7 +28,13 @@ const { mask, placeholder } = toRefs(props)
 
 const pinRefs = ref<Array<HTMLInputElement>>([])
 const pin = ref<string[]>([])
-const dataCompleted = ref(false)
+const dataCompleted = computed(() => {
+	if (pinString.value.length !== pinSize.value || focusedIndex.value !== pinSize.value - 1) {
+		return false
+	} else {
+		return true
+	}
+})
 const focusedIndex = ref(0)
 const pinString = computed(() => pin.value.join(''))
 const pinSize = computed(() => pinRefs.value.length)
@@ -41,12 +47,7 @@ function handlePinChange(value: string, index: number) {
 }
 
 function handleComplete() {
-	if (pinString.value.length !== pinSize.value || focusedIndex.value !== pinSize.value - 1) {
-		dataCompleted.value = false
-	} else {
-		dataCompleted.value = true
-		emit('complete', pinString.value)
-	}
+	dataCompleted.value && emit('complete', pinString.value)
 }
 
 function focusInput() {
