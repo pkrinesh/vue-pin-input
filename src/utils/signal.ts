@@ -1,6 +1,7 @@
-import { shallowRef, triggerRef } from 'vue'
+import { computed, shallowRef, triggerRef } from 'vue'
 
 type Set<T> = (value: T | ((value: T) => void)) => void
+export type State<T> = () => T
 
 export function state<T>(value: T): [() => T, Set<T>] {
 	const r = shallowRef(value)
@@ -17,4 +18,10 @@ export function state<T>(value: T): [() => T, Set<T>] {
 	}
 
 	return [get, set]
+}
+
+export function derived<T>(getter: () => T): State<T> {
+	const _v = computed(getter)
+
+	return () => _v.value as any
 }
