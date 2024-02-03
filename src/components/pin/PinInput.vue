@@ -162,12 +162,13 @@ function handleBlur(e: FocusEvent) {
 		:id="`pin-input-${index}`"
 		:type="isMasked ? 'password' : 'text'"
 		:placeholder="placeholder"
+		:disabled="disabled ? disabled : false"
 		:data-completed="context.dataCompleted.value ? '' : undefined"
 		@input="(e) => handleInput(e, props.index)"
 		@keydown="(e) => handleKeydown(e, props.index)"
 		@focus="(e) => handleFocus(e, props.index)"
 		@blur="(e) => handleBlur(e)"
 		@paste="(e) => handlePaste(e, props.index)"
-		:disabled="disabled ? disabled : false"
+		aria-hidden
 	/>
 </template>

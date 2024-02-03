@@ -105,5 +105,20 @@ definePinContext({
 <template>
 	<div v-bind="$attrs">
 		<slot />
+		<input class="sr-only" v-model="pinString" />
 	</div>
 </template>
+
+<style scoped>
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
+</style>
