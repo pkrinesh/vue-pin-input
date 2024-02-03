@@ -1,4 +1,11 @@
 <script setup lang="ts">
+/**
+ * - [x] Managing focus and tab-index is hardest part.
+ * - [x] Type '123' and click outside and again click the tab. You will find the focus exactly where you left it.
+ * - [x] Even when you navigate via keyboard focus will work just the fine.
+ * - [x] Now type '123456', you will see inputs are disabled and some action is fired. You will get the error but here you will find all the inputs are reset and focus is on the first input. This is all managed on ui page buy the method expose via component.
+ * - [x] Now please copy the code. You will focused back to where the previous focused was even if few inputs are filled.
+ */
 import CopyCheck from '@/components/icons/CopyCheck.vue'
 import CopyIcon from '@/components/icons/CopyIcon.vue'
 import PinInput from '@/components/pin/PinInput.vue'
@@ -51,7 +58,7 @@ function handleCopy() {
 						ref="otpRef"
 						class="space-y-4"
 						@complete="handleComplete"
-						@valueChange="(val) => setIsError(false)"
+						@valueChange="() => setIsError(false)"
 					>
 						<PinLabel>Please Enter otp sent to your number</PinLabel>
 						<div class="" flex="~ gap-3">
