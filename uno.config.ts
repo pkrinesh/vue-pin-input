@@ -11,9 +11,9 @@ export default defineConfig({
 	presets: [presetAttributify(), presetUno(), presetIcons()],
 	theme: {
 		colors: {
-			border: 'hsl(var(--border)/25%)',
+			border: 'hsl(var(--border))',
 			input: 'hsl(var(--input))',
-			ring: 'hsl(var(--ring)/25%)',
+			ring: 'hsl(var(--ring))',
 			background: 'hsl(var(--background))',
 			foreground: 'hsl(var(--foreground))',
 			primary: {
@@ -24,25 +24,17 @@ export default defineConfig({
 				DEFAULT: 'hsl(var(--secondary))',
 				foreground: 'hsl(var(--secondary-foreground))',
 			},
-			neutral: {
-				DEFAULT: 'hsl(var(--neutral))',
-				foreground: 'hsl(var(--neutral-foreground))',
-			},
-			accent: {
-				DEFAULT: 'hsl(var(--accent))',
-				foreground: 'hsl(var(--accent-foreground))',
+			destructive: {
+				DEFAULT: 'hsl(var(--destructive) / <alpha-value>)',
+				foreground: 'hsl(var(--destructive-foreground) / <alpha-value>)',
 			},
 			muted: {
 				DEFAULT: 'hsl(var(--muted))',
 				foreground: 'hsl(var(--muted-foreground))',
 			},
-			success: {
-				DEFAULT: 'hsl(var(--success))',
-				foreground: 'hsl(var(--success-foreground))',
-			},
-			destructive: {
-				DEFAULT: 'hsl(var(--destructive))',
-				foreground: 'hsl(var(--destructive-foreground))',
+			accent: {
+				DEFAULT: 'hsl(var(--accent))',
+				foreground: 'hsl(var(--accent-foreground))',
 			},
 			popover: {
 				DEFAULT: 'hsl(var(--popover))',
@@ -52,6 +44,12 @@ export default defineConfig({
 				DEFAULT: 'hsl(var(--card))',
 				foreground: 'hsl(var(--card-foreground))',
 			},
+		},
+		borderRadius: {
+			sm: 'calc(var(--radius) - 4px)',
+			md: `calc(var(--radius) - 2px)`,
+			lg: `var(--radius)`,
+			xl: `calc(var(--radius) + 4px)`,
 		},
 	},
 	transformers: [transformerVariantGroup()],

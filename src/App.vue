@@ -6,7 +6,8 @@
  * - [x] Now type '123456', you will see inputs are disabled and some action is fired. You will get the error but here you will find all the inputs are reset and focus is on the first input. This is all managed on ui page buy the method expose via component.
  * - [x] Now please copy the code. You will focused back to where the previous focused was even if few inputs are filled.
  */
-import CopyCheck from '@/components/icons/CopyCheck.vue'
+
+import CheckIcon from '@/components/icons/CheckIcon.vue'
 import CopyIcon from '@/components/icons/CopyIcon.vue'
 import PinInput from '@/components/pin/PinInput.vue'
 import PinLabel from '@/components/pin/PinLabel.vue'
@@ -50,10 +51,12 @@ function handleCopy() {
 </script>
 
 <template>
-	<div class="min-h-100vh overflow-hidden" flex="~ col 1 justify-center items-center">
-		<div class="bg-card p4 w-md h-70 rounded-xl shadow-xl" flex="~ col justify-center items-center">
+	<div class="h-full flex flex-col flex-1 justify-center items-center overflow-hidden">
+		<div
+			class="w-md h-70 flex flex-col rounded-xl border border-border bg-card text-card-foreground shadow p-4 justify-center items-center"
+		>
 			<div v-if="!isOtpTrue()" class="space-y-4">
-				<form flex="~ col gap-2">
+				<form class="flex flex-col gap-2">
 					<PinRoot
 						ref="otpRef"
 						class="space-y-4"
@@ -61,19 +64,16 @@ function handleCopy() {
 						@valueChange="() => setIsError(false)"
 					>
 						<PinLabel>Please Enter otp sent to your number</PinLabel>
-						<div class="" flex="~ gap-3">
+						<div class="flex gap-3">
 							<PinInput
 								v-for="(_, index) in PIN_SIZE"
-								:disabled="isDisabled()"
-								class="h10 w10 bg-transparent placeholder-foreground/70 outline-none"
+								class="h-10 w-10 text-center text-lg bg-transparent rounded-md border font-medium border-input shadow-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 								:class="[
 									isError()
-										? 'border-destructive ring ring-destructive focus:ring-destructive'
-										: 'border-border focus:ring focus:ring-ring',
+										? 'border-destructive ring ring-destructive focus-visible:ring-2'
+										: 'focus-visible:ring-2 focus-visible:ring-ring',
 								]"
-								border="~ 1 rounded"
-								text="center lg muted-foreground"
-								font="medium"
+								:disabled="isDisabled()"
 								:key="index"
 								:index="index"
 							/>
@@ -81,28 +81,25 @@ function handleCopy() {
 					</PinRoot>
 				</form>
 
-				<div class="relative w-75 p3 bg-muted" border="~ card rounded">
-					<p class="font-semibold">192837</p>
+				<div class="relative w-75 p-3 bg-muted text-muted-foreground rounded-lg">
+					<p class="font-medium">192837</p>
 					<button
 						@click="handleCopy"
-						class="absolute top-0 right-2 h-8 w-8 translate-y-2 rounded hover:opacity-85"
-						:class="[copied ? 'bg-secondary/60' : 'bg-card']"
-						flex="~ justify-center items-center"
+						class="group absolute flex justify-center items-center top-0 right-2 h-8 w-8 translate-y-2 transition"
 					>
-						<CopyCheck v-if="copied" class="text-success" />
-						<CopyIcon v-else />
+						<CheckIcon v-if="copied" class="text-primary" />
+						<CopyIcon v-else class="group-hover:text-primary" />
 					</button>
 				</div>
 			</div>
 
-			<div v-else class="" flex="~ col justify-center items-center gap-2">
+			<div v-else class="flex flex-col justify-center items-center gap-2">
 				<div v-confetti="{ duration: 2000, stageHeight: 500, stageWidth: 500, force: 1 }" />
 				<h1 class="text-4xl font-bold">Congratulations!</h1>
 				<p>Thank you for playing along. I hope you had fun.</p>
 				<button
 					@click="setIsOtpTrue(false)"
-					class="mt6 px4 py3 bg-secondary/80 rounded font-semibold transition hover:bg-secondary"
-					text=" accent primary-foreground"
+					class="mt-6 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm shadow-lg font-medium transition hover:opacity-90"
 				>
 					Start Over
 				</button>
