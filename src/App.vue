@@ -51,9 +51,9 @@ function handleCopy() {
 </script>
 
 <template>
-	<div class="h-full flex flex-col flex-1 justify-center items-center overflow-hidden">
+	<div class="flex h-full flex-1 flex-col items-center justify-center overflow-hidden">
 		<div
-			class="w-md h-70 flex flex-col rounded-xl border border-border bg-card text-card-foreground shadow p-4 justify-center items-center"
+			class="flex h-72 w-[28rem] flex-col items-center justify-center rounded-xl border border-border bg-card p-4 text-card-foreground shadow"
 		>
 			<div v-if="!isOtpTrue()" class="space-y-4">
 				<form class="flex flex-col gap-2">
@@ -63,15 +63,15 @@ function handleCopy() {
 						@complete="handleComplete"
 						@valueChange="() => setIsError(false)"
 					>
-						<PinLabel>Please Enter otp sent to your number</PinLabel>
+						<PinLabel class="text-sm font-medium">Please Enter otp sent to your number</PinLabel>
 						<div class="flex gap-3">
 							<PinInput
 								v-for="(_, index) in PIN_SIZE"
-								class="h-10 w-10 text-center text-lg bg-transparent rounded-md border font-medium border-input shadow-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+								class="h-10 w-10 rounded-md border border-input bg-transparent text-center text-lg font-medium shadow-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
 								:class="[
 									isError()
-										? 'border-destructive ring ring-destructive focus-visible:ring-2'
-										: 'focus-visible:ring-2 focus-visible:ring-ring',
+										? 'ring-1 ring-destructive focus-visible:ring'
+										: 'focus-visible:ring focus-visible:ring-ring',
 								]"
 								:disabled="isDisabled()"
 								:key="index"
@@ -81,11 +81,11 @@ function handleCopy() {
 					</PinRoot>
 				</form>
 
-				<div class="relative w-75 p-3 bg-muted text-muted-foreground rounded-lg">
+				<div class="w-75 relative rounded-lg bg-muted p-3 text-muted-foreground">
 					<p class="font-medium">192837</p>
 					<button
 						@click="handleCopy"
-						class="group absolute flex justify-center items-center top-0 right-2 h-8 w-8 translate-y-2 transition"
+						class="group absolute right-2 top-0 flex h-8 w-8 translate-y-2 items-center justify-center transition"
 					>
 						<CheckIcon v-if="copied" class="text-primary" />
 						<CopyIcon v-else class="group-hover:text-primary" />
@@ -93,13 +93,13 @@ function handleCopy() {
 				</div>
 			</div>
 
-			<div v-else class="flex flex-col justify-center items-center gap-2">
+			<div v-else class="flex flex-col items-center justify-center gap-2">
 				<div v-confetti="{ duration: 2000, stageHeight: 500, stageWidth: 500, force: 1 }" />
 				<h1 class="text-4xl font-bold">Congratulations!</h1>
 				<p>Thank you for playing along. I hope you had fun.</p>
 				<button
 					@click="setIsOtpTrue(false)"
-					class="mt-6 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm shadow-lg font-medium transition hover:opacity-90"
+					class="mt-6 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-lg transition hover:opacity-90"
 				>
 					Start Over
 				</button>
