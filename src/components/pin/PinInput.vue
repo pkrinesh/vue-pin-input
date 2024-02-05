@@ -39,7 +39,11 @@ function handleInput(e: Event, index: number) {
 	e.preventDefault()
 
 	const el = e.target as HTMLInputElement
-	if (!el.value) return
+	// no value or not a number
+	if (!el.value || !!el.value.match(/\D/g)) {
+		el.value = ''
+		return
+	}
 
 	const selectionStart = el.selectionStart ?? 1
 	const value = selectionStart > 1 ? el.value.slice(-1) : el.value.slice(0, 1)
