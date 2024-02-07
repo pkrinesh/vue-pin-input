@@ -1,17 +1,19 @@
 <script setup lang="ts"></script>
 
 <template>
-	<div class="mx-auto space-y-8 text-pretty px-4 tracking-wider text-foreground/70 lg:px-8">
-		<h1 class="text-4xl font-semibold text-primary">Accessible Pin Input</h1>
+	<div
+		class="mx-auto max-w-2xl space-y-8 text-pretty px-4 tracking-wider text-foreground/70 lg:px-8"
+	>
+		<h1 class="hidden text-4xl font-semibold text-primary lg:block">Accessible Pin Input</h1>
 
 		<div class="space-y-4 text-foreground/80">
 			<h5 class="text-xl font-bold">TL;DR:</h5>
 			<p class="text-lg">
-				Crafted a pin input for my app as existing libraries lacked accessibility. <br />
-				The pin input features automatic focus when pressing tab, code completion with auto-submit,
-				resetting input on error while focusing the first input, and even retains focus when you're
-				halfway through the pin, click outside to lose focus, press tab, and seamlessly resumes
-				where it left off.
+				Crafted a pin input for my app as existing libraries lacked accessibility. The pin input
+				features automatic focus when pressing tab, code completion with auto-submit, resetting
+				input on error while focusing the first input, and even retains focus when you're halfway
+				through the pin, click outside to lose focus, press tab, and seamlessly resumes where it
+				left off.
 			</p>
 			<div class="h-[1px] bg-border" />
 		</div>
@@ -45,7 +47,7 @@
 				what I've built.
 			</p>
 
-			<ol class="ml-8 list-decimal space-y-8 text-foreground/90">
+			<ol class="ml-4 list-decimal space-y-8 text-foreground/90 md:ml-8">
 				<li>
 					The initial input is automatically focused; if not, a quick page refresh should do the
 					trick. Now, type '123' – notice how the focus gracefully shifts with each input. Click
@@ -54,9 +56,10 @@
 					features. You can check -
 					<span
 						><a
-							class="text-primary underline transition-all hover:underline-offset-2"
+							class="text-primary/70 underline transition-all hover:underline-offset-2"
 							href="https://chakra-ui.com/docs/components/pin-input/usage"
 							target="_blank"
+							tabindex="-1"
 							>Chakra ui</a
 						></span
 					>

@@ -55,7 +55,7 @@ export default {
 				sm: 'calc(var(--radius) - 4px)',
 			},
 			fontFamily: {
-				sans: ['"Nunito Sans"', 'sans-serif', ...theme.fontFamily.sans],
+				sans: ['"Josefin Sans"', 'sans-serif', ...theme.fontFamily.sans],
 			},
 		},
 	},
