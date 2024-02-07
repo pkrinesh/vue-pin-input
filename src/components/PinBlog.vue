@@ -106,7 +106,7 @@
 				for those who require it but for everyone's enhanced experience.
 			</p>
 
-			<p class="font-semibold text-foreground/90">
+			<p class="text-xl font-semibold text-foreground/90">
 				It's not just about a pin input; it's about crafting digital experiences that leave a
 				lasting impact.
 			</p>
