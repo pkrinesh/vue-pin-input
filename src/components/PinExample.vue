@@ -8,6 +8,8 @@
  */
 
 import CheckIcon from '@/components/icons/CheckIcon.vue'
+import EyeIcon from '@/components/icons/EyeIcon.vue'
+import EyeOffIcon from '@/components/icons/EyeOffIcon.vue'
 import CopyIcon from '@/components/icons/CopyIcon.vue'
 import PinInput from '@/components/pin/PinInput.vue'
 import PinLabel from '@/components/pin/PinLabel.vue'
@@ -24,6 +26,9 @@ const otpRef = ref<InstanceType<typeof PinRoot> | null>(null)
 const { copy, copied } = useClipboard({ source: TRUE_OTP, legacy: true })
 
 const [isDisabled, setIsDisabled] = state(false)
+const [isMasked, setIsMasked] = state(false)
+// const [accessible, setAccessible] = state(true)
+const isAccessible = ref(true)
 const [isOtpTrue, setIsOtpTrue] = state(false)
 const [isError, setIsError] = state(false)
 
@@ -40,13 +45,18 @@ async function handleComplete(value: string) {
 	setIsError(true)
 	setIsOtpTrue(false)
 	setIsDisabled(false)
-	otpRef.value?.reset()
+	isAccessible.value && otpRef.value?.reset()
 }
 
 function handleCopy() {
 	copy(TRUE_OTP)
 	setIsError(false)
-	otpRef.value?.focus()
+	isAccessible.value && otpRef.value?.focus()
+}
+
+function handleMasking() {
+	setIsMasked(!isMasked())
+	isAccessible.value && otpRef.value?.focus()
 }
 </script>
 
@@ -56,13 +66,24 @@ function handleCopy() {
 	>
 		<div v-if="!isOtpTrue()" class="space-y-4">
 			<form class="flex flex-col gap-2">
+				<label class="ml-auto">
+					<input tabindex="-1" type="checkbox" v-model="isAccessible" />
+					Accessible
+				</label>
 				<PinRoot
 					ref="otpRef"
 					class="space-y-4"
+					:mask="isMasked()"
 					@complete="handleComplete"
 					@valueChange="() => setIsError(false)"
 				>
-					<PinLabel class="text-sm font-medium">Please Enter otp sent to your number</PinLabel>
+					<div class="flex items-center justify-between">
+						<PinLabel class="text-sm font-medium">Please Enter otp sent to your number</PinLabel>
+						<button tabindex="-1" class="text-lg" @click.prevent="handleMasking">
+							<EyeIcon v-if="!isMasked()" />
+							<EyeOffIcon v-else />
+						</button>
+					</div>
 					<div class="flex gap-3">
 						<PinInput
 							v-for="(_, index) in PIN_SIZE"
