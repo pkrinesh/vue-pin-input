@@ -4,24 +4,30 @@
 	<div
 		class="mx-auto max-w-2xl space-y-8 text-pretty px-4 tracking-wider text-foreground/70 lg:px-8"
 	>
-		<h1 class="hidden text-4xl font-semibold text-primary lg:block">Accessible Pin Input</h1>
+		<h1 class="hidden text-4xl font-semibold text-foreground lg:block">Accessible Pin Input</h1>
 
 		<div class="space-y-4 text-foreground/80">
 			<h5 class="text-xl font-bold">TL;DR:</h5>
+			<p class="text-sm text-foreground/50 lg:hidden">
+				Seems like you are on smaller screen! You can read here but must experience on larger
+				screen.
+			</p>
 			<p class="text-lg">
 				Crafted a pin input for my app as existing libraries lacked accessibility. The pin input
 				features automatic focus when pressing tab, code completion with auto-submit, resetting
-				input on error while focusing the first input, and even retains focus when you're halfway
-				through the pin, click outside to lose focus, press tab, and seamlessly resumes where it
-				left off.
+				input on error while focusing the first input, resetting the focus when pressed masked
+				button and even retains focus when you're halfway through the pin, click outside to lose
+				focus, press tab, and seamlessly resumes where it left off. Please try by toggling
+				accessibility check.
 			</p>
 			<div class="h-[1px] bg-border" />
 		</div>
 		<div class="mt-4 space-y-8 text-lg leading-relaxed">
 			<p>
-				On the right, you will find the simple-looking pin input card. It is very easy to make; you
-				just have to shift the focus, right? Hell no, believe me, this is not easy, especially when
-				you think about accessibility. And at the end, you will see why.
+				On the <span class="lg:hidden">top</span><span class="hidden lg:inline-flex">right</span>,
+				you will find the simple-looking pin input card. It is very easy to make; you just have to
+				shift the focus, right? Hell no, believe me, this is not easy, especially when you think
+				about accessibility. And at the end, you will see why.
 			</p>
 
 			<p>
@@ -57,7 +63,7 @@
 					<span
 						><a
 							class="text-primary/70 underline transition-all hover:underline-offset-2"
-							href="https://chakra-ui.com/docs/components/pin-input/usage"
+							href="https://chakra-ui.com/docs/components/pin-input/usage#usage"
 							target="_blank"
 							tabindex="-1"
 							>Chakra ui</a
@@ -76,9 +82,14 @@
 
 				<li>
 					Now, hit the copy button, and You will find The focus elegantly glides back to the first
-					spot or its previous spot, if a few inputs are already filled.
+					spot or its previous spot, if a few inputs are already filled. And Same goes for the
+					masked button, too.
 				</li>
 			</ol>
+
+			<p class="text-sm text-foreground">
+				Too fill the pain, do the same by unchecking accessible check box.
+			</p>
 
 			<p>
 				This phenomenon is known as 'Roving tabindex', a technique accomplished by tracking the
