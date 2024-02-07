@@ -105,7 +105,7 @@ definePinContext({
 <template>
 	<div v-bind="$attrs">
 		<slot />
-		<input class="sr-only" v-model="pinString" />
+		<input class="sr-only" v-model="pinString" tabindex="-1" />
 	</div>
 </template>
 
