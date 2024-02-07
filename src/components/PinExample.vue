@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * - [x] Managing focus and tab-index is hardest part.
+ * - [x] Managing focus and tabindex is hardest part.
  * - [x] Type '123' and click outside and again click the tab. You will find the focus exactly where you left it.
  * - [x] Even when you navigate via keyboard focus will work just the fine.
  * - [x] Now type '123456', you will see inputs are disabled and some action is fired. You will get the error but here you will find all the inputs are reset and focus is on the first input. This is all managed on ui page buy the method expose via component.

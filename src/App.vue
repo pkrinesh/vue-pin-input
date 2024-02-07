@@ -8,7 +8,7 @@ import ToggleTheme from '@/components/ToggleTheme.vue'
 <template>
 	<ToggleTheme class="absolute right-2 top-2" />
 	<div class="grid h-full grid-cols-2 place-items-center overflow-hidden">
-		<div class="size-full border-r border-r-border bg-muted p-8">
+		<div class="size-full overflow-y-auto border-r border-r-border bg-muted/10 p-8">
 			<PinBlog />
 		</div>
 		<div class="grid size-full place-items-center">
