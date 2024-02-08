@@ -1,28 +1,25 @@
 <script setup lang="ts"></script>
 
 <template>
-	<div
-		class="mx-auto max-w-2xl space-y-8 text-pretty px-4 tracking-wider text-foreground/70 lg:px-8"
-	>
+	<div class="mx-auto max-w-2xl space-y-8 text-pretty px-4 tracking-wider">
 		<h1 class="hidden text-4xl font-semibold text-foreground lg:block">Accessible Pin Input</h1>
-
-		<div class="space-y-4 text-foreground/80">
+		<div class="space-y-4 text-foreground/90">
 			<h5 class="text-xl font-bold">TL;DR:</h5>
 			<p class="text-sm text-foreground/50 lg:hidden">
 				Seems like you are on smaller screen! You can read here but must experience on larger
 				screen.
 			</p>
 			<p class="text-lg">
-				Crafted a pin input for my app as existing libraries lacked accessibility. The pin input
-				features automatic focus when pressing tab, code completion with auto-submit, resetting
-				input on error while focusing the first input, resetting the focus when pressed masked
-				button and even retains focus when you're halfway through the pin, click outside to lose
-				focus, press tab, and seamlessly resumes where it left off. Please try by toggling
-				accessibility check.
+				Crafted a pin input for my app as existing libraries lacked accessibility and focus
+				management. The pin input features automatic focus when pressing tab, code completion with
+				auto-submit, resetting input on error while focusing the first input, resetting the focus
+				when pressed masked button and even retains focus when you're halfway through the pin, click
+				outside to lose focus, press tab, and seamlessly resumes where it left off. Please try by
+				toggling accessibility check.
 			</p>
 			<div class="h-[1px] bg-border" />
 		</div>
-		<div class="mt-4 space-y-8 text-lg leading-relaxed">
+		<div class="mt-4 space-y-8 text-lg text-foreground/70">
 			<p>
 				On the <span class="lg:hidden">top</span><span class="hidden lg:inline-flex">right</span>,
 				you will find the simple-looking pin input card. It is very easy to make; you just have to
@@ -57,9 +54,9 @@
 				<li>
 					The initial input is automatically focused; if not, a quick page refresh should do the
 					trick. Now, type '123' – notice how the focus gracefully shifts with each input. Click
-					anywhere to lose focus, press 'tab,' and voila! The focus smartly returns to where you
-					left off, precisely at the fourth place. Pretty cool, right? - Most component lacks this
-					features. You can check -
+					anywhere to lose focus, press <key class="rounded-sm bg-muted px-2 py-1">tab</key>, and
+					voila! The focus smartly returns to where you left off, precisely at the fourth place.
+					Pretty cool, right? - Most component lacks this features. You can check -
 					<span
 						><a
 							class="text-primary/70 underline transition-all hover:underline-offset-2"
@@ -75,15 +72,16 @@
 					Moving on to the code completion phase with '123456.' Upon completion, the system takes
 					charge, auto-submits, and gracefully disables further interactions. But, whoops! An error
 					alert surfaces, clearing all fields and tactfully redirecting focus back to the initial
-					pin input.
+					pin input. Same will happen when you press the
+					<span class="text-primary">Resend</span> button.
 				</li>
 
 				<li>When navigating by keyboard, you can't navigate when current input is empty.</li>
 
 				<li>
-					Now, hit the copy button, and You will find The focus elegantly glides back to the first
-					spot or its previous spot, if a few inputs are already filled. And Same goes for the
-					masked button, too.
+					Now, hit the <span class="text-primary">Copy</span> button, and You will find The focus
+					elegantly glides back to the first spot or its previous spot, if a few inputs are already
+					filled. And Same goes for the <span class="text-primary">Masked</span> button, too.
 				</li>
 			</ol>
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// TODO: Finish working on content
 import PinBlog from '@/components/PinBlog.vue'
 import PinExample from '@/components/PinExample.vue'
 import ToggleTheme from '@/components/ToggleTheme.vue'

@@ -5,7 +5,7 @@ import MoonIcon from './icons/MoonIcon.vue'
 import SunIcon from './icons/SunIcon.vue'
 
 function useTheme() {
-	const theme = useLocalStorage<'light' | 'dark'>('theme', null)
+	const theme = useLocalStorage<'light' | 'dark'>('theme', 'light')
 
 	onMounted(() => {
 		if (!theme.value) {
