@@ -58,6 +58,11 @@ function handleMasking() {
 	setIsMasked(!isMasked())
 	isAccessible.value && otpRef.value?.focus()
 }
+
+function handleResending() {
+	setIsMasked(!isMasked())
+	isAccessible.value && otpRef.value?.reset()
+}
 </script>
 
 <template>
@@ -79,10 +84,6 @@ function handleMasking() {
 				>
 					<div class="flex items-center justify-between">
 						<PinLabel class="text-sm font-medium">Please Enter otp sent to your number</PinLabel>
-						<button tabindex="-1" class="text-lg" @click.prevent="handleMasking">
-							<EyeIcon v-if="!isMasked()" />
-							<EyeOffIcon v-else />
-						</button>
 					</div>
 					<div class="flex gap-3">
 						<PinInput
@@ -98,8 +99,28 @@ function handleMasking() {
 							:index="index"
 						/>
 					</div>
+
+					<div>
+						<p v-if="isError()" class="text-sm text-destructive">
+							Oops! Looks like you got it wrong. Try again!
+						</p>
+						<div v-else class="flex items-center justify-between">
+							<p class="text-sm text-foreground/80">Do not share your otp with anyone</p>
+							<button class="text-lg" @click.prevent="handleMasking">
+								<EyeIcon v-if="!isMasked()" />
+								<EyeOffIcon v-else />
+							</button>
+						</div>
+					</div>
 				</PinRoot>
 			</form>
+
+			<button
+				class="-mx-2 rounded-sm px-2 py-1 text-sm font-medium text-primary transition-all hover:bg-muted/20"
+				@click.prevent="handleResending"
+			>
+				Resend Otp
+			</button>
 
 			<div class="relative w-full rounded-lg bg-muted p-3 text-muted-foreground">
 				<p class="font-medium">192837</p>
