@@ -67,7 +67,7 @@ function handleResending() {
 
 <template>
 	<div
-		class="flex flex-col items-center justify-center rounded-xl border border-border bg-card p-4 text-card-foreground shadow md:h-72 md:w-[28rem]"
+		class="flex w-full min-w-[22rem] max-w-[28rem] flex-col items-center justify-center rounded-xl border border-border bg-card p-4 text-card-foreground shadow md:h-72"
 	>
 		<div v-if="!isOtpTrue()" class="space-y-4">
 			<form class="flex flex-col gap-2">
