@@ -54,9 +54,10 @@
 				<li>
 					The initial input is automatically focused; if not, a quick page refresh should do the
 					trick. Now, type '123' – notice how the focus gracefully shifts with each input. Click
-					anywhere to lose focus, press <key class="rounded-sm bg-muted px-2 py-1">tab</key>, and
-					voila! The focus smartly returns to where you left off, precisely at the fourth place.
-					Pretty cool, right? - Most component lacks this features. You can check -
+					anywhere to lose focus, press
+					<key class="rounded-sm bg-muted px-2 py-1 font-medium">tab</key>, and voila! The focus
+					smartly returns to where you left off, precisely at the fourth place. Pretty cool, right?
+					- Most component lacks this features. You can check -
 					<span
 						><a
 							class="text-primary/70 underline transition-all hover:underline-offset-2"
