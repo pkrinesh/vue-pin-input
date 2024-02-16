@@ -24,17 +24,6 @@ onUnmounted(() => {
 	context.handleInputElementChange(null, props.index)
 })
 
-onMounted(() => {
-	const pinEl = context.pinRefs[context.pin.value.length === 0 ? 0 : context.pin.value.length - 1]
-	if (!pinEl) return
-
-	pinEl.focus()
-	addTabIndex(context.pinRefs, context.pin.value.length === 0 ? 0 : context.pin.value.length - 1)
-	context.pinRefs.forEach((item) => {
-		item.setAttribute('role', 'tab')
-	})
-})
-
 function handleInput(e: Event, index: number) {
 	e.preventDefault()
 
@@ -50,11 +39,8 @@ function handleInput(e: Event, index: number) {
 	el.value = value
 	context.handlePinChange(value, index)
 
-	const { nextEl, nextIndex } = next(context.pinRefs, index)
-	// addTabIndex(context.pinRefs, nextIndex)
+	const { nextEl } = next(context.pinRefs, index)
 	nextEl.focus()
-
-	// context.handleComplete()
 }
 
 function handlePaste(e: ClipboardEvent, index: number) {
@@ -71,12 +57,9 @@ function handlePaste(e: ClipboardEvent, index: number) {
 		context.handlePinChange(pastedData[i - initialIndex], i)
 		context.pinRefs[i].focus()
 		context.pinRefs[i].value = pastedData[i - initialIndex]
-		// addTabIndex(context.pinRefs, i)
 	}
 
 	context.pinRefs[lastIndex]?.focus()
-	// addTabIndex(context.pinRefs, lastIndex - 1)
-	context.handleComplete()
 }
 
 function handleKeydown(e: KeyboardEvent, index: number) {
@@ -91,9 +74,8 @@ function handleKeydown(e: KeyboardEvent, index: number) {
 				if (index < 0) return
 				inputRef.value!.value = ''
 				context.handlePinChange('', index - 1)
-				const { prevEl, prevIndex } = prev(context.pinRefs, index)
+				const { prevEl } = prev(context.pinRefs, index)
 				prevEl.focus()
-				// addTabIndex(context.pinRefs, prevIndex)
 			}
 			break
 		}
@@ -104,9 +86,8 @@ function handleKeydown(e: KeyboardEvent, index: number) {
 		}
 		case 'ArrowLeft': {
 			e.preventDefault()
-			const { prevEl, prevIndex } = prev(context.pinRefs, index)
+			const { prevEl } = prev(context.pinRefs, index)
 			prevEl.focus()
-			// addTabIndex(context.pinRefs, prevIndex)
 			break
 		}
 		case 'ArrowRight': {
@@ -115,16 +96,14 @@ function handleKeydown(e: KeyboardEvent, index: number) {
 
 			// only allow focus to move to next when the current element hold the value
 			if (el.value) {
-				const { nextEl, nextIndex } = next(context.pinRefs, index)
+				const { nextEl } = next(context.pinRefs, index)
 				nextEl.focus()
-				// addTabIndex(context.pinRefs, nextIndex)
 			}
 			break
 		}
 		case 'Home': {
 			e.preventDefault()
 			context.pinRefs[0].focus()
-			// addTabIndex(context.pinRefs, 0)
 			break
 		}
 		case 'End': {
@@ -132,7 +111,6 @@ function handleKeydown(e: KeyboardEvent, index: number) {
 			if (!context.pin.value[context.pinSize.value - 1]) return
 
 			last(context.pinRefs).focus()
-			// addTabIndex(context.pinRefs, context.pinRefs.length - 1)
 			break
 		}
 		default:

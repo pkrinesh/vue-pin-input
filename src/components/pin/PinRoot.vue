@@ -11,8 +11,9 @@
  * [ ] Animated border, on error animation and different colors
  * [ ] Document the process
  */
-import { computed, nextTick, readonly, ref, toRefs, toValue } from 'vue'
+import { computed, nextTick, onMounted, readonly, ref, toRefs, toValue, watchEffect } from 'vue'
 import { definePinContext } from './pin-context'
+import { addTabIndex } from '@/utils/tabs'
 
 const props = defineProps<{
 	mask?: boolean
@@ -28,6 +29,11 @@ const { mask, placeholder } = toRefs(props)
 
 const pinRefs = ref<Array<HTMLInputElement>>([])
 const pin = ref<string[]>([])
+const focusedIndex = ref(0)
+
+const pinString = computed(() => pin.value.join(''))
+const pinSize = computed(() => pinRefs.value.length)
+const labelFor = computed(() => `pin-input-${focusedIndex.value}`)
 const dataCompleted = computed(() => {
 	if (pinString.value.length !== pinSize.value || focusedIndex.value !== pinSize.value - 1) {
 		return false
@@ -35,15 +41,27 @@ const dataCompleted = computed(() => {
 		return true
 	}
 })
-const focusedIndex = ref(0)
-const pinString = computed(() => pin.value.join(''))
-const pinSize = computed(() => pinRefs.value.length)
-const labelFor = computed(() => `pin-input-${focusedIndex.value}`)
+
+watchEffect(() => {
+	console.log(dataCompleted.value)
+	if (dataCompleted.value) handleComplete()
+})
+
+onMounted(() => {
+	const currentIndex = pin.value.length === 0 ? 0 : pin.value.length - 1
+	const pinEl = pinRefs.value[currentIndex]
+	if (!pinEl) return
+
+	pinEl.focus()
+	addTabIndex(pinRefs.value, currentIndex)
+	pinRefs.value.forEach((item) => {
+		item.setAttribute('role', 'tab')
+	})
+})
 
 function handlePinChange(value: string, index: number) {
 	pin.value[index] = value
 	emit('valueChange', pinString.value, index)
-	handleComplete()
 }
 
 function handleComplete() {
@@ -103,7 +121,7 @@ definePinContext({
 </script>
 
 <template>
-	<div v-bind="$attrs">
+	<div v-bind="$attrs" :data-completed="dataCompleted ? '' : undefined">
 		<slot />
 		<input class="sr-only" v-model="pinString" tabindex="-1" />
 	</div>
