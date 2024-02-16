@@ -27,10 +27,9 @@ const { copy, copied } = useClipboard({ source: TRUE_OTP, legacy: true })
 
 const [isDisabled, setIsDisabled] = state(false)
 const [isMasked, setIsMasked] = state(false)
-// const [accessible, setAccessible] = state(true)
-const isAccessible = ref(true)
 const [isOtpTrue, setIsOtpTrue] = state(false)
 const [isError, setIsError] = state(false)
+const isAccessible = ref(true)
 
 async function handleComplete(value: string) {
 	setIsDisabled(true)
@@ -135,7 +134,7 @@ function handleResending() {
 		</div>
 
 		<div v-else class="flex flex-col items-center justify-center gap-2">
-			<div v-confetti="{ duration: 2000, stageHeight: 500, stageWidth: 500, force: 1 }" />
+			<div v-confetti="{ duration: 2000, stageWidth: 500, force: 1 }" />
 			<h1 class="text-4xl font-bold">Congratulations!</h1>
 			<p>Thank you for playing along. I hope you had fun.</p>
 			<button

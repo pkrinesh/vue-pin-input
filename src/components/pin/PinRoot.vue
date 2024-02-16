@@ -43,7 +43,6 @@ const dataCompleted = computed(() => {
 })
 
 watchEffect(() => {
-	console.log(dataCompleted.value)
 	if (dataCompleted.value) handleComplete()
 })
 

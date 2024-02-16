@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-	<div class="mx-auto max-w-2xl space-y-8 text-pretty px-4 tracking-wider">
+	<div class="mx-auto max-w-2xl space-y-8 text-pretty px-4 leading-7 tracking-wider">
 		<h1 class="hidden text-4xl font-semibold text-foreground lg:block">Accessible Pin Input</h1>
 		<div class="space-y-4 text-foreground/90">
 			<h5 class="text-xl font-bold">TL;DR:</h5>
@@ -9,7 +9,7 @@
 				Seems like you are on smaller screen! You can read here but must experience on larger
 				screen.
 			</p>
-			<p class="text-lg">
+			<p>
 				Crafted a pin input for my app as existing libraries lacked accessibility and focus
 				management. The pin input features automatic focus when pressing tab, code completion with
 				auto-submit, resetting input on error while focusing the first input, resetting the focus
@@ -19,7 +19,7 @@
 			</p>
 			<div class="h-[1px] bg-border" />
 		</div>
-		<div class="mt-4 space-y-8 text-lg text-foreground/70">
+		<div class="mt-4 space-y-8 text-foreground/70">
 			<p>
 				On the <span class="lg:hidden">top</span><span class="hidden lg:inline-flex">right</span>,
 				you will find the simple-looking pin input card. It is very easy to make; you just have to
@@ -55,7 +55,7 @@
 					The initial input is automatically focused; if not, a quick page refresh should do the
 					trick. Now, type '123' – notice how the focus gracefully shifts with each input. Click
 					anywhere to lose focus, press
-					<key class="rounded-sm bg-muted px-2 py-1 font-medium">tab</key>, and voila! The focus
+					<kbd class="rounded-sm bg-muted px-2 py-1 font-medium">tab</kbd>, and voila! The focus
 					smartly returns to where you left off, precisely at the fourth place. Pretty cool, right?
 					- Most component lacks this features. You can check -
 					<span
@@ -86,7 +86,7 @@
 				</li>
 			</ol>
 
-			<p class="text-sm text-foreground">
+			<p class="text-sm text-foreground/80">
 				Too fill the pain, do the same by unchecking accessible check box.
 			</p>
 
