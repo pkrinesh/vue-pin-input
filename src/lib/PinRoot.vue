@@ -1,19 +1,7 @@
 <script setup lang="ts">
-/**
- * [x] Copy-paste input - 192837
- * [x] separate component
- * [x] make it headless and composable
- * [x] Separate the core utils and more
- * [x] Masked input
- * [x] Make a proper otp page with mock api both success and error
- * [ ] for utils function use ref/no-ref - look into vueuse
- * [ ] Error handling
- * [ ] Animated border, on error animation and different colors
- * [ ] Document the process
- */
 import { computed, nextTick, onMounted, readonly, ref, toRefs, toValue, watchEffect } from 'vue'
-import { definePinContext } from './pin-context'
-import { addTabIndex } from '@/utils/tabs'
+import { definePinContext } from './pin-context.js'
+import { addTabIndex } from './tabs.js'
 
 const props = defineProps<{
 	mask?: boolean

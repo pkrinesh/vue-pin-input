@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { last, next, prev } from '@/utils/array.js'
-import { addTabIndex } from '@/utils/tabs.js'
+import { last, next, prev } from './array.js'
+import { addTabIndex } from './tabs.js'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { usePinContext } from './pin-context'
+import { usePinContext } from './pin-context.js'
 
 const props = defineProps<{
 	index: number
